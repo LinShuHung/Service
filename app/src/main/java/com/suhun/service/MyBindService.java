@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
 
 public class MyBindService extends Service {//2.只要MyBindService被繫結上被實體化
     private String tag = MyBindService.class.getSimpleName();
@@ -29,5 +30,9 @@ public class MyBindService extends Service {//2.只要MyBindService被繫結上�
     public boolean onUnbind(Intent intent) {
         isBind = false;
         return super.onUnbind(intent);
+    }
+
+    public void getName(){
+        Log.d(tag, "-----*****"+tag+"*****-----");
     }
 }
