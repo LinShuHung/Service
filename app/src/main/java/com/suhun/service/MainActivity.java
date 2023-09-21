@@ -6,7 +6,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
@@ -15,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     ActivityResultLauncher resultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
+            Log.d(tag, "----Call Back To MainActivity");
 
         }
     });
@@ -26,10 +29,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goStartStyleService(View view){
-
+        Intent intent = new Intent(this, StartStyleServiceActivity.class);
+        resultLauncher.launch(intent);
     }
 
     public void goBindStyleService(View view){
-
+        Intent intent = new Intent(this, BindStyleServiceActivity.class);
+        resultLauncher.launch(intent);
     }
 }
