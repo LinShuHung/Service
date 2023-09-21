@@ -22,8 +22,18 @@ public class StartStyleServiceActivity extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             int counterValue = intent.getIntExtra("counterValue", -1);
+            int maxCounter = intent.getIntExtra("maxCounter", -1);
+            int counterZero = intent.getIntExtra("counterZero", -1);
             if(counterValue > -1){
-                resultCounter.setText(""+counterValue);
+                resultCounter.setText(""+ counterValue);
+                counterSeekBar.setProgress(counterValue);
+            }
+            if(maxCounter > -1){
+                counterSeekBar.setMax(maxCounter);
+            }
+            if(counterZero > -1){
+                resultCounter.setText(""+counterZero);
+                counterSeekBar.setProgress(counterZero);
             }
         }
     }
@@ -33,11 +43,32 @@ public class StartStyleServiceActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_style_service);
         initView();
+        myReceiver = new MyReceiver();
     }
 
     private void initView(){
         resultCounter = findViewById(R.id.lid_counterResult);
         counterSeekBar = findViewById(R.id.lid_counterSeekBar);
+        counterSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(fromUser){
+                    Intent intent = new Intent(StartStyleServiceActivity.this, MyStartService.class);
+                    intent.putExtra("userChangeValue", progress);
+                    startService(intent);
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
     @Override

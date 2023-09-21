@@ -22,6 +22,8 @@ public class MyStartService extends Service {
                 Intent intent = new Intent("suhun");
                 intent.putExtra("counterValue", counter);
                 sendBroadcast(intent);
+            }else{
+                cancel();
             }
         }
     }
@@ -36,15 +38,34 @@ public class MyStartService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
+        counter = 0;
+        maxCounter = 200;
+        Intent intent = new Intent("suhun");
+        intent.putExtra("maxCounter", maxCounter);
+        sendBroadcast(intent);
+        timer = new Timer();
+        timer.schedule(new MyTask(), 100, 100);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        int userChangeValue = intent.getIntExtra("userChangeValue", -1);
+        if(userChangeValue > -1){
+            counter = userChangeValue;
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if(timer!=null){
+            timer.cancel();
+            timer.purge();
+            timer = null;
+            Intent intent = new Intent("suhun");
+            intent.putExtra("counterZero", 0);
+            sendBroadcast(intent);
+        }
     }
 }
