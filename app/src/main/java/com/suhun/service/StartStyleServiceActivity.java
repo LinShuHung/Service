@@ -22,5 +22,6 @@ public class StartStyleServiceActivity extends AppCompatActivity {
     }
 
     public void finishStartStyleServiceFun(View view){
+        finish();
     }
 }
