@@ -12,9 +12,13 @@
         android:theme="@style/Theme.Service"
         tools:targetApi="31">
         <service
-            android:name=".MyBindService"
+            android:name=".MyStartService"
             android:enabled="true"
             android:exported="true"></service>
+        <service
+            android:name=".MyBindService"
+            android:enabled="true"
+            android:exported="true" />
 
         <activity
             android:name=".BindStyleServiceActivity"
